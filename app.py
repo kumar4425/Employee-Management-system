@@ -11,6 +11,7 @@ from db.operations import (
     delete_department,
     get_employee_by_id
 )
+import os
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-change-in-production'
@@ -125,4 +126,5 @@ def delete_department_route(dept_id):
     return redirect(url_for('department_list'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
