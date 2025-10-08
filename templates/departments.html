@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h2>🏢 Departments</h2>
+    <a href="{{ url_for('index') }}" class="btn">← Back to Employees</a>
+</div>
+
+<!-- Add Department Form -->
+<form method="POST" action="{{ url_for('add_department_route') }}" style="margin: 20px 0;">
+    <div style="display: flex; gap: 10px; align-items: end;">
+        <div style="flex: 1;">
+            <label for="dept_name">Add New Department</label>
+            <input type="text" id="dept_name" name="name" placeholder="Department name" required>
+        </div>
+        <button type="submit" class="btn" style="padding: 8px 16px;">+ Add</button>
+    </div>
+</form>
+
+<!-- Departments List -->
+{% if departments %}
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dept_id, dept_name in departments %}
+            <tr>
+                <td>{{ dept_id }}</td>
+                <td>{{ dept_name }}</td>
+                <td>
+                    <a href="{{ url_for('delete_department_route', dept_id=dept_id) }}"
+                       onclick="return confirm('⚠️ Delete department? Employees will become unassigned!')"
+                       style="color: #dc3545; text-decoration: none;">
+                        ❌ Delete
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>📭 No departments found.</p>
+{% endif %}
+{% endblock %}

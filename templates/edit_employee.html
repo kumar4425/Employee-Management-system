@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>✏️ Edit Employee</h2>
+<form method="POST">
+    <input type="hidden" name="emp_id" value="{{ employee[0] }}">
+
+    <label for="name">Name *</label>
+    <input type="text" id="name" name="name" value="{{ employee[1] }}" required>
+
+    <label for="email">Email *</label>
+    <input type="email" id="email" name="email" value="{{ employee[2] }}" required>
+
+    <label for="department_id">Department</label>
+    <select name="department_id" id="department_id">
+        <option value="">-- Unassigned --</option>
+        {% for dept_id, dept_name in departments %}
+        <option value="{{ dept_id }}" {% if dept_id == employee[3] %}selected{% endif %}>
+            {{ dept_name }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <label for="salary">Salary</label>
+    <input type="number" id="salary" name="salary" step="0.01" min="0" value="{{ employee[4] }}">
+
+    <button type="submit" style="background:#007bff; color:white; padding:10px 20px; border:none; border-radius:4px;">
+        ✅ Update Employee
+    </button>
+    <a href="{{ url_for('index') }}" style="margin-left: 10px; color: #6c757d;">← Cancel</a>
+</form>
+{% endblock %}
